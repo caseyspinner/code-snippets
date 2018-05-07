@@ -1,6 +1,6 @@
 import React from "react";
 import DailyInteractionsPointsGraph from "./DailyInteractionsPointsGraph";
-import * as interactionsService from "../services/interaction.service";
+import * as interactionsService from "../services/interaction.service"; //front end service functions which call the controller functions (back end), which call the back end service functions
 
 class DailyInteractionsWrapper extends React.Component {
    constructor(props) {
