@@ -6,11 +6,13 @@ const ObjectId = require("../mongodb").ObjectId;
 
 module.exports = {
    //...
-   getTodaysCompletedInteractions: getTodaysCompletedInteractions,
+   getTodaysInteractionPoints: getTodaysInteractionPoints
    //...
 };
 
-function getTodaysCompletedInteractions(req, res) {
+//...
+
+function getTodaysInteractionPoints(req, res) {
    id = new ObjectId(req.auth.userId);
    let today = moment()
       .startOf("day")
@@ -18,12 +20,15 @@ function getTodaysCompletedInteractions(req, res) {
    let tomorrow = moment()
       .endOf("day")
       .format();
-
    interactionServices
-      .getTodaysCompletedInteractions(id, today, tomorrow)
-      .then(interactions => {
+      .getTodaysInteractionPoints(id, today, tomorrow)
+      .then(points => {
          const responseModel = new responses.ItemResponse();
-         responseModel.items = interactions;
+         if (points.length < 1) {
+            responseModel.item = 0;
+         } else {
+            responseModel.item = points[0].totalPoints;
+         }
          res.json(responseModel);
       })
       .catch(err => {
@@ -31,3 +36,5 @@ function getTodaysCompletedInteractions(req, res) {
          res.status(500).send(new responses.ErrorResponse(err));
       });
 }
+
+//...
