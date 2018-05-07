@@ -56,8 +56,7 @@ class PendingFriendRequests extends React.Component {
    }
 
    render() {
-      const requests = [...this.state.requests];
-      const requestList = requests.map(request => {
+      const requestList = this.state.requests.map(request => {
          return (
             <div
                key={request._id}
